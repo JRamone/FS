@@ -1,3 +1,4 @@
+```mermaid
 sequenceDiagram
     participant selain
     participant palvelin
@@ -9,6 +10,7 @@ sequenceDiagram
     deactivate palvelin
 
     Note right of selain: Palvelin tekee muistiinpanolle omat juttunsa ja uudelleen ohjaa selaimen lataamaan aloitussivun uudestaan
+```
 
     
 
