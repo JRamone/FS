@@ -9,7 +9,9 @@ const Header = (props) => {
 const Content = (props) => {
   return (
     <div>
-      {props.partname} {props.exercises}
+      <Part/>
+      <Part/>
+      <Part/>
     </div>
   )
 }
@@ -20,6 +22,15 @@ const Total = (props) => {
       total number of exercises: {props.total}
     </div>
   )
+}
+
+const Part = (props) => {
+  return (
+    <div>
+      {props.name} {props.exercises}
+    </div>
+  )
+  
 }
 
 const App = () => {
@@ -41,12 +52,19 @@ const App = () => {
   // Header renderöi nimen DONE!
   // Content renderöi osat ja tehtävämäärät DONE!
   // Total renderöi tehtävien yhteismäärän DONE!
+
+  //1.2
+  //REFACTOR:
+  // Content ei renderöi osien nimiä eikä tehtävien lukumäärää vaan 3 Part-komponenttia
+  // Part renderöi yhden osan nimen ja tehtävämäärän
+  //--------------------------------------------
+  // Luo Part ja testaa toiminta DONE!
+  // välitä props & testaa
+  
   return (
     <div>
       <Header coursename={course}/>
-      <Content partname={part1} exercises={exercises1}/>
-      <Content partname={part2} exercises={exercises2}/>
-      <Content partname={part3} exercises={exercises3}/>
+      <Content partnames={[part1,part2,part3]} exercises={[exercises1]}/>
       <Total total={exercises1 + exercises2 + exercises3}/>
     </div>
   )
