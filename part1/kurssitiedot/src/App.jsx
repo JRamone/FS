@@ -9,9 +9,9 @@ const Header = (props) => {
 const Content = (props) => {
   return (
     <div>
-      <Part/>
-      <Part/>
-      <Part/>
+      <Part name={props.partnames[0]} exercises={props.exercises[0]}/>
+      <Part name={props.partnames[1]} exercises={props.exercises[1]}/>
+      <Part name={props.partnames[2]} exercises={props.exercises[2]}/>
     </div>
   )
 }
@@ -59,12 +59,12 @@ const App = () => {
   // Part renderöi yhden osan nimen ja tehtävämäärän
   //--------------------------------------------
   // Luo Part ja testaa toiminta DONE!
-  // välitä props & testaa
+  // välitä props listana Contentille ja sieltä Parttiin & testaa DONE!
   
   return (
     <div>
       <Header coursename={course}/>
-      <Content partnames={[part1,part2,part3]} exercises={[exercises1]}/>
+      <Content partnames={[part1,part2,part3]} exercises={[exercises1,exercises2,exercises3]}/>
       <Total total={exercises1 + exercises2 + exercises3}/>
     </div>
   )
