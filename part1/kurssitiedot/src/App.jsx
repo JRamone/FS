@@ -9,7 +9,7 @@ const Header = (props) => {
 const Content = (props) => {
   return (
     <div>
-      {props.parts.map(part => <Part name={part.name} exercises={part.exercises}/>)}
+      {props.parts.map(part => <Part name={part.name} exercises={part.exercises} key={part.name}/>)}
     </div>
   )
 }
@@ -25,7 +25,6 @@ const Total = (props) => {
 const Part = (props) => {
   return (
     <div>
-      {console.log(props.name)}
       {props.name} {props.exercises}
     </div>
   )
@@ -60,28 +59,35 @@ const Part = (props) => {
   //Kurssit parts- nimiseen listaan
   //Muokkaa koodi toimivaksi
 
+  //1.5
+  //REFACTOR:
+  //Luo kurssista ja sen osista yksi javascript olio
+  // TESTAA !! 
+
   const App = () => {
-    const course = 'Half Stack application development'
-    const parts = [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
+    const course = {
+      name:'Half Stack application development',
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7
+        },
+        {
+          name: 'State of a component',
+          exercises: 14
+        }
+      ]
+    }
 
   return (
     <div>
-      <Header coursename={course}/>
-      <Content parts={parts}/>
-      <Total parts={parts}/>
+      <Header coursename={course.name}/>
+      <Content parts={course.parts}/>
+      <Total parts={course.parts}/>
     </div>
   )
 }
