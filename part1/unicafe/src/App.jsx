@@ -13,23 +13,25 @@ import { useState } from 'react'
 
 const Headline = ({text}) => <h1>{text}</h1>
 
-const Button = ({onClick, text}) => <button onClick={onClick}>{text}</button>
+const Button = ({onClick, text}) => <button style={{border: "1px solid black"}} onClick={onClick}>{text}</button>
 
-const StatisticLine = ({stat, text, sufix}) => <p>{text}:  {stat}{sufix}</p>
+const StatisticLine = ({stat, text, sufix}) => <tr><td>{text}:  </td><td>{stat}{sufix}</td></tr>
 
 const Statistics = ({props}) => {
   let good, neutral, bad, all;
   ({good, neutral, bad, all} = props)
   if (all > 0)
     return (
-        <div>
-          <StatisticLine text='Good' stat={good}/>
-          <StatisticLine text='Neutral' stat={neutral}/>
-          <StatisticLine text='Bad' stat={bad}/>
-          <StatisticLine text='All' stat={all}/>
-          <StatisticLine text='Average' stat={(good-bad)/all}/>
-          <StatisticLine text='Positive' stat={(good/all)*100} sufix={'%'}/>
-        </div>
+        <table>
+          <tbody>
+            <StatisticLine text='Good' stat={good}/>
+            <StatisticLine text='Neutral' stat={neutral}/>
+            <StatisticLine text='Bad' stat={bad}/>
+            <StatisticLine text='All' stat={all}/>
+            <StatisticLine text='Average' stat={((good-bad)/all).toFixed(1)}/>
+            <StatisticLine text='Positive' stat={((good/all)*100).toFixed(1)} sufix={'%'}/>
+          </tbody>
+        </table>
       )
   return <div>no ratings yet</div>
   }
@@ -62,19 +64,16 @@ function App() {
   
 
   return (
-    <div>
-      <div>
-        <Headline text='Give feedback'/>
-      </div>
-      <p><Button onClick={increaseStatBy('Good', 1)} text='Good'/></p>
-      <p><Button onClick={increaseStatBy('Neutral', 1)} text='Neutral'/></p>
-      <p><Button onClick={increaseStatBy('Bad', 1)} text='Bad'/></p>
+    <>
+      <Headline text='Give feedback'/>
+      <Button onClick={increaseStatBy('Good', 1)} text='Good'/>
+      <Button onClick={increaseStatBy('Neutral', 1)} text='Neutral'/>
+      <Button onClick={increaseStatBy('Bad', 1)} text='Bad'/>
       <div>
         <Headline text='Statisticstics'/>
       </div>
       <Statistics props={{'good':good, 'bad':bad, 'neutral':neutral, 'all':all}}/>
-
-    </div>
+    </>
   )
 }
 
