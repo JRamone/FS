@@ -15,7 +15,25 @@ const Headline = ({text}) => <h1>{text}</h1>
 
 const Button = ({onClick, text}) => <button onClick={onClick}>{text}</button>
 
-const Statistics = ({stat, text, sufix}) => <p>{text}:  {stat}{sufix}</p>
+const Display = ({stat, text, sufix}) => <p>{text}:  {stat}{sufix}</p>
+
+const Statistics = ({props}) => {
+  let good, neutral, bad, all;
+  ({good, neutral, bad, all} = props)
+  if (all > 0)
+    return (
+        <div>
+          <Display text='Good' stat={good}/>
+          <Display text='Neutral' stat={neutral}/>
+          <Display text='Bad' stat={bad}/>
+          <Display text='All' stat={all}/>
+          <Display text='Average' stat={(good-bad)/all}/>
+          <Display text='Positive' stat={(good/all)*100} sufix={'%'}/>
+        </div>
+      )
+  return <div>no ratings yet</div>
+  }
+
  
 function App() {
   const [good,setGood] = useState(0)
@@ -54,12 +72,8 @@ function App() {
       <div>
         <Headline text='Statisticstics'/>
       </div>
-      <Statistics text='Good' stat={good}/>
-      <Statistics text='Neutral' stat={neutral}/>
-      <Statistics text='Bad' stat={bad}/>
-      <Statistics text='All' stat={all}/>
-      <Statistics text='Average' stat={(good-bad)/all}/>
-      <Statistics text='Positive' stat={(good/all)*100} sufix={'%'}/>
+      <Statistics props={{'good':good, 'bad':bad, 'neutral':neutral, 'all':all}}/>
+
     </div>
   )
 }
