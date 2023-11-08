@@ -10,10 +10,23 @@ const Button = ({text,handler}) =>{
 
 const App = (props) => {
   const [directions, setDirections] = useState({left:0,right:0})
+  const [allClicks, setAllClicks] = useState([])
+  const [value,setValue] = useState(10)
 
-  const clickLeft = () => setDirections({...directions, left:directions.left + 1})
-  const clickRight = () => setDirections({...directions, right: directions.right + 1})
-  
+  const clickLeft = () => {
+    setDirections({...directions, left:directions.left + 1})
+    setAllClicks(allClicks.concat('L'))
+  }
+  const clickRight = () => {
+    setDirections({...directions, right: directions.right + 1})
+    setAllClicks(allClicks.concat('R'))
+  }
+
+  // Tapahtumankäsittelijä on funktion palauttava funktio. Tällä kikalla saadaan yksi tapahtukäsittelijä hoitamaan montaa geneeristä tehtävää
+  const setValueTo = (valueToSet) => {
+    return () => setValue(valueToSet)
+  } 
+
   return (
     <div>
       <table>
@@ -33,6 +46,11 @@ const App = (props) => {
           </tr>
         </tbody>
       </table>
+      <div>{allClicks.join('')}</div>
+      <div>{value}</div>
+      <div><Button text='1000' handler={setValueTo(1000)}/></div>
+      <div><Button text='500' handler={setValueTo(500)}/></div>
+      <div><Button text='0' handler={setValueTo(0)}/></div>
     </div>
   )
 }
