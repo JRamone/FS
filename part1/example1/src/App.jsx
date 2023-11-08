@@ -1,30 +1,38 @@
-const Footer = (props) => {
-  return (
-    <div>
-      This amazing site was created by 
-      <a href='https://www.github.com/JRamone'> JRamone</a>
-    </div>
-  )
+import {useState} from 'react'
+
+const Display = ({value}) =>{
+  return <>{value}</>
 }
 
-const Hello = (props) => {
-  return (
-    <div>
-      <p>Hello {props.name}, you are {props.age} years old</p>
-    </div>
-  )
+const Button = ({text,handler}) =>{
+  return <button onClick={handler}>{text}</button>
 }
 
-const App = () => {
-  const name = "Pekka"
-  const age = 25 
+const App = (props) => {
+  const [directions, setDirections] = useState({left:0,right:0})
+
+  const clickLeft = () => setDirections({...directions, left:directions.left + 1})
+  const clickRight = () => setDirections({...directions, right: directions.right + 1})
+  
   return (
     <div>
-      <h1>Greetings</h1>
-      <Hello name={name} age={age}/>
-      <Hello name="Kullervo" age={25+10}/>
-      <Hello/>
-      <Footer/>
+      <table>
+        <thead>
+          <tr>
+            <th>HIENO TAULU</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+              <td><Display value={directions.left}/></td>
+              <td><Display value={directions.right}/></td>
+          </tr>
+          <tr>
+              <td><Button text='left' handler={clickLeft}/></td>
+              <td><Button text='right' handler={clickRight}/></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   )
 }
