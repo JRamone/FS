@@ -15,7 +15,7 @@ const Headline = ({text}) => <h1>{text}</h1>
 
 const Button = ({onClick, text}) => <button onClick={onClick}>{text}</button>
 
-const Display = ({stat, text, sufix}) => <p>{text}:  {stat}{sufix}</p>
+const Statistics = ({stat, text, sufix}) => <p>{text}:  {stat}{sufix}</p>
  
 function App() {
   const [good,setGood] = useState(0)
@@ -54,12 +54,12 @@ function App() {
       <div>
         <Headline text='Statisticstics'/>
       </div>
-      <Display text='Good' stat={good}/>
-      <Display text='Neutral' stat={neutral}/>
-      <Display text='Bad' stat={bad}/>
-      <Display text='All' stat={all}/>
-      <Display text='Average' stat={(good-bad)/all}/>
-      <Display text='Positive' stat={(good/all)*100} sufix={'%'}/>
+      <Statistics text='Good' stat={good}/>
+      <Statistics text='Neutral' stat={neutral}/>
+      <Statistics text='Bad' stat={bad}/>
+      <Statistics text='All' stat={all}/>
+      <Statistics text='Average' stat={(good-bad)/all}/>
+      <Statistics text='Positive' stat={(good/all)*100} sufix={'%'}/>
     </div>
   )
 }
