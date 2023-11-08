@@ -14,11 +14,14 @@ const App = () => {
    
   const [selected, setSelected] = useState((Math.floor(Math.random()*anecdotes.length)))
   const [votes,setVotes] = useState(new Uint8Array(anecdotes.length))
+  const [mostvotes,setMostVotes] = useState(selected)
+
   const randomize = () => setSelected((Math.floor(Math.random()*anecdotes.length)))
   const vote = () => {
     const copy = [...votes]
     copy[selected] += 1
     setVotes(copy)
+    setMostVotes(votes.indexOf(Math.max(...votes)))
   }
   
   return (
@@ -31,6 +34,12 @@ const App = () => {
     </div>
     <button onClick={randomize}>Randomize</button>
     <button onClick={vote}>vote</button>
+    <div>
+      Most votes:
+    </div>
+    <div>
+      {anecdotes[mostvotes]}
+    </div>
     </>
   )
 }

@@ -6,3 +6,4 @@
 | 3.11.2023 | 0.75 | continue w1 |
 | 4.11.2023 | 1 | continue w1 |
 | 7.11.2023 | 2 | continue w1 |
+| 8.11.2023 | 2.5 | continue w1 |
