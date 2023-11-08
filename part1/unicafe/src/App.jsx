@@ -15,7 +15,7 @@ const Headline = ({text}) => <h1>{text}</h1>
 
 const Button = ({onClick, text}) => <button onClick={onClick}>{text}</button>
 
-const Display = ({stat, text, sufix}) => <p>{text}:  {stat}{sufix}</p>
+const StatisticLine = ({stat, text, sufix}) => <p>{text}:  {stat}{sufix}</p>
 
 const Statistics = ({props}) => {
   let good, neutral, bad, all;
@@ -23,12 +23,12 @@ const Statistics = ({props}) => {
   if (all > 0)
     return (
         <div>
-          <Display text='Good' stat={good}/>
-          <Display text='Neutral' stat={neutral}/>
-          <Display text='Bad' stat={bad}/>
-          <Display text='All' stat={all}/>
-          <Display text='Average' stat={(good-bad)/all}/>
-          <Display text='Positive' stat={(good/all)*100} sufix={'%'}/>
+          <StatisticLine text='Good' stat={good}/>
+          <StatisticLine text='Neutral' stat={neutral}/>
+          <StatisticLine text='Bad' stat={bad}/>
+          <StatisticLine text='All' stat={all}/>
+          <StatisticLine text='Average' stat={(good-bad)/all}/>
+          <StatisticLine text='Positive' stat={(good/all)*100} sufix={'%'}/>
         </div>
       )
   return <div>no ratings yet</div>
