@@ -15,20 +15,31 @@ const Headline = ({text}) => <h1>{text}</h1>
 
 const Button = ({onClick, text}) => <button onClick={onClick}>{text}</button>
 
-const Display = ({stat, text}) => <p>{text}:  {stat}</p>
+const Display = ({stat, text, sufix}) => <p>{text}:  {stat}{sufix}</p>
  
 function App() {
   const [good,setGood] = useState(0)
   const [neutral,setNeutral] = useState(0)
   const [bad,setBad] = useState(0)
+  const [all,setAll] = useState(0)
 
   const increaseStatBy = (stat,amount) => {
     if (stat == 'Good')
-    return () => setGood(good + amount)
+    return () => {
+      setGood(good + amount)
+      setAll(all + 1)
+    }
+      
     if (stat == 'Neutral')
-    return () => setNeutral(neutral + amount)
-    if (stat == 'Bad')
-    return () => setBad(bad + amount)
+    return () => {
+      setNeutral(neutral + amount)
+      setAll(all + 1)
+    }
+    if (stat == 'Bad') 
+    return () => {
+      setBad(bad + amount)
+      setAll(all + 1)
+    }
   }
   
 
@@ -46,6 +57,9 @@ function App() {
       <Display text='Good' stat={good}/>
       <Display text='Neutral' stat={neutral}/>
       <Display text='Bad' stat={bad}/>
+      <Display text='All' stat={all}/>
+      <Display text='Average' stat={(good-bad)/all}/>
+      <Display text='Positive' stat={(good/all)*100} sufix={'%'}/>
     </div>
   )
 }
