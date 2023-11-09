@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 
 const Display = ({persons}) => {
   return (
-    <ul style={{'list-style-type': 'none'}}>
+    <ul style={{'listStyleType': 'none'}}>
       {persons.map(person => <li key={person.name}>{person.name}</li>)}
     </ul>
   )
@@ -22,6 +22,12 @@ const App = () => {
     event.preventDefault()
     const newPerson = {
       name: newName
+    }
+    const person_exists = persons.map(person => person.name).includes(newPerson.name)
+    if (person_exists) {
+      alert(`${newName} is already added to phonebook`)
+      setNewName('')
+      return
     }
     setPersons(persons.concat(newPerson))
     setNewName('')
