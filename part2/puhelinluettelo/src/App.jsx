@@ -1,25 +1,40 @@
-import { useLayoutEffect, useState } from 'react'
+import { useState } from 'react'
 
-const Display = ({persons}) => {
+const Display = ({persons, filter}) => {
   return (
     <ul style={{'listStyleType': 'none'}}>
-      {persons.map(person => <li key={person.name}>{person.name}  -  {person.number}</li>)}
+      {persons.filter(person => person.name.toUpperCase().includes(filter.toUpperCase())).map(person => <li key={person.name}>{person.name}  -  {person.number}</li>)}
     </ul>
+  )
+}
+
+const Filter = ({handler}) => {
+  return (<>
+      Filter shown with: <input onChange={handler}/>
+      </>
   )
 }
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
-  ]) 
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Ada Lovelace', number: '39-44-5323523' },
+    { name: 'Dan Abramov', number: '12-43-234345' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' }
+  ])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [filter, setFilter] = useState('')
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
   const handleNumberChange = (event) => {
     setNewNumber(event.target.value)
+  }
+
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value)
   }
 
   const addNewPerson = (event) => {
@@ -43,6 +58,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Filter handler={handleFilterChange}/>
+      <h2>Add a new</h2>
       <form onSubmit={addNewPerson}>
         <div>
           name: 
@@ -63,7 +80,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      <Display persons={persons}/>
+      <Display persons={persons} filter={filter}/>
     </div>
   )
 
