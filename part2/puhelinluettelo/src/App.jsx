@@ -15,6 +15,30 @@ const Filter = ({handler}) => {
   )
 }
 
+const PersonForm = ({eventhandlers, statehandlers, states}) => {
+  return (
+    <form onSubmit={statehandlers.addNewPerson}>
+    <div>
+      name: 
+      <input 
+        value = {states.newName} 
+        onChange={eventhandlers.handleNameChange}
+      />
+    </div>
+    <div>
+      number:
+      <input 
+        value = {states.newNumber} 
+        onChange={eventhandlers.handleNumberChange}
+      />
+    </div>
+    <div>
+      <button type="submit" >add</button>
+    </div>
+  </form>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
@@ -60,25 +84,14 @@ const App = () => {
       <h2>Phonebook</h2>
       <Filter handler={handleFilterChange}/>
       <h2>Add a new</h2>
-      <form onSubmit={addNewPerson}>
-        <div>
-          name: 
-          <input 
-            value = {newName} 
-            onChange={handleNameChange}
-          />
-        </div>
-        <div>
-          number:
-          <input 
-            value = {newNumber} 
-            onChange={handleNumberChange}
-          />
-        </div>
-        <div>
-          <button type="submit" >add</button>
-        </div>
-      </form>
+      <PersonForm
+        eventhandlers = {{'handleNameChange' : handleNameChange, 
+                          'handleNumberChange': handleNumberChange,
+                         }}
+        statehandlers=  {{'addNewPerson' : addNewPerson}}
+        states = {{'newName': newName, 'newNumber': newNumber}}
+      
+      />
       <h2>Numbers</h2>
       <Display persons={persons} filter={filter}/>
     </div>
