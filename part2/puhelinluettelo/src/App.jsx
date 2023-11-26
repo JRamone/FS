@@ -93,12 +93,23 @@ const App = () => {
       name: newName,
       number: newNumber
     }
-    const person_exists = persons.map(person => person.name).includes(newPerson.name)
-    if (person_exists) {
-      if (newNumber !== persons.mapfind()){
-
+    const existing_person = persons.find(p => p.name === newPerson.name)
+    
+    if (existing_person) {
+      if (newNumber !== existing_person.number){
+        const ok = window.confirm(`${existing_person.name} is already on the phonebook, replace old number with a new one?`)
+        if (ok) {
+          personService
+            .updateNumber({...existing_person, number: newNumber})
+            .then(updatedPerson => {
+              const updatedPersons = persons.map(p => p.name !== existing_person.name ? p : {...existing_person, number: newNumber})
+              setPersons(updatedPersons)
+            })
+        }
+      } else {
+        alert(`${newName} is already added to phonebook`)
       }
-      alert(`${newName} is already added to phonebook`)
+      
       setNewName('')
       setNewNumber('')
       return

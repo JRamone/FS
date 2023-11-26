@@ -18,12 +18,15 @@ const addNewPerson = (person) => {
 }
 
 const updateNumber = (person) => {
+    //console.log(`we should update ${person}`)
     const request = axios.put(`${baseurl}/${person.id}`, person)
+    return request.then(response => response.data)
 }
 
 
 export default {
     getAll,
     addNewPerson,
-    deletePersonById
+    deletePersonById,
+    updateNumber
 }
