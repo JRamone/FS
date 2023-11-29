@@ -1,6 +1,39 @@
 import { useState,useEffect } from 'react'
 import personService from './services/persons.js'
 
+const Notification = ({notification}) => {
+  const {message, type} = notification
+  const errorStyle = {
+    height : 50,
+    fontSize : 32,
+    padding : 20,
+    border : 3,
+    borderStyle : 'solid',
+    borderRadius : 10,
+    background : 'LightCoral',
+    color : 'Crimson'
+  }
+  const emptyStyle = {
+    height : 50,
+    fontSize : 32,
+    padding : 20,
+  }
+  const successStyle = {
+    height : 50,
+    fontSize : 32,
+    padding : 20,
+    border : 3,
+    borderStyle : 'solid',
+    borderRadius : 10,
+    background : 'Chartreuse',
+    color : 'DarkGreen'
+  }
+  if (!message) return <div style={emptyStyle}></div>
+  if (type === 'success') return <div style={successStyle}>{message}</div>
+  if (type === 'error') return <div style={errorStyle}>{message}</div>
+  return <div>failure in notification component</div>
+}
+
 const Display = ({persons, filter, eventhandlers}) => {
   return (
     <ul style={{'listStyleType': 'none'}}>
@@ -8,15 +41,20 @@ const Display = ({persons, filter, eventhandlers}) => {
         .filter(person => person.name
         .toUpperCase()
         .includes(filter.toUpperCase()))
-        .map(person => <li key={person.name}>{person.name}  -  {person.number}<button name={person.name} value={person.id} onClick={eventhandlers.handlePersonDelete}>delete</button></li>)}
+        .map(person => <li className='person' key={person.name}>
+          {person.name}  -  {person.number}
+          <button name={person.name} value={person.id} onClick={eventhandlers.handlePersonDelete}>delete</button></li>)}
     </ul>
   )
 }
 
 const Filter = ({handler}) => {
-  return (<>
+  const filterStyle = {
+    padding : 10
+  }
+  return (<div style={filterStyle}>
       Filter shown with: <input onChange={handler}/>
-      </>
+      </div>
   )
 }
 
@@ -49,6 +87,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [notification, setNotification] = useState({})
 
   useEffect(() => {
     personService
@@ -79,8 +118,17 @@ const App = () => {
           persons
             .filter(p => p.id !== idToDelete)
             .map(p => p)
+            
             )
           )
+        .then(() => {
+          setNotification({message:`deletöd ${nameToDelete} from phonebook`, type: 'success'})
+          setTimeout(() => setNotification({}),2000)
+        })
+        .catch(e => {
+          setNotification({message:`error, ${nameToDelete} does not exist`, type: 'error'})
+          setTimeout(() => setNotification({}),2000)
+        })
     }
     console.log('done')
   }
@@ -104,6 +152,12 @@ const App = () => {
             .then(updatedPerson => {
               const updatedPersons = persons.map(p => p.name !== existing_person.name ? p : {...existing_person, number: newNumber})
               setPersons(updatedPersons)
+              setNotification({message:`updated ${newName}'s number`, type: 'success'})
+              setTimeout(() => setNotification({}),2000)
+            })
+            .catch(e => {
+              setNotification({message:`${e}`, type: 'error'})
+              setTimeout(() => setNotification({}),2000)
             })
         }
       } else {
@@ -117,17 +171,24 @@ const App = () => {
     personService
       .addNewPerson(newPerson)
       .then((newPerson) => {
+        setNotification({message:`added ${newName} to phonebook`, type: 'success'})
+        setTimeout(() => setNotification({}),2000)
         setPersons(persons.concat(newPerson))
         setNewName('')
         setNewNumber('')
         }
       )
+      .catch(e => {
+        setNotification({message:`${e}`, type: 'error'})
+        setTimeout(() => setNotification({}),2000)
+      })
     
   }
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+      <Notification notification={notification}/>
       <Filter handler={handleFilterChange}/>
       <h2>Add a new</h2>
       <PersonForm
